@@ -1,10 +1,9 @@
 #!/usr/bin/env dyalogscript
 input ← ⊃⎕NGET 'input/6.txt' 1
-r ← {q ← ((⍵×⍵) - 4×⍺)*0.5 ⋄ ∪0.5×⍵+1 ¯1×q}
-solve ← ¯1∘+⍤-/⍤{⍵/⍨(⊢=+)⍵}⍤(⊣/,⊢/)⍤(⊣/{⌈⍺,⌊⍵}⊢/)
+p ← {1↓⊃1↓⎕VFI⍵}
+r ← {∪0.5×⍵+1 ¯1×((⍵×⍵) - 4×⍺)*0.5}
+f ← ¯1∘+⍤-/⍤{⍵/⍨(⊢=+)⍵}⍤{⌈⍺,⌊⍵}/
+solve ← {×/(f r)/¨↓⍉↑⍵}
 
-t d ← {1↓⊃1↓⎕VFI ⍵}¨input
-⎕ ←  ×/(⊣/{solve ⍺ r ⍵}⊢/)¨↓⍉↑d t ⍝ Part 1
-
-t2 d2 ← ⍎¨∊¨{⍕¨1↓⊃1↓⎕VFI ⍵}¨input
-⎕ ← ×/(⊣/{solve ⍺ r ⍵}⊢/)¨↓⍉↑d2 t2 ⍝ Part 2
+⎕ ← solve ⊖p¨input ⍝ Part 1
+⎕ ← solve ⊖{⍎∊⍕¨p⍵}¨input ⍝ Part 2
